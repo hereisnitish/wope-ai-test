@@ -1,0 +1,191 @@
+manager_task:
+  description: >
+    **PRIMARY ORCHESTRATION RESPONSIBILITIES:**
+    - Analyze incoming project requirements and break them down into actionable tasks
+    - Assign specific tasks to appropriate specialist agents (UI/UX, technical, data aggregation)
+    - Monitor progress and ensure all components integrate seamlessly
+    - Make strategic decisions about project architecture and implementation approach
+
+      
+    **TASK DELEGATION STRATEGY:**
+    - Route UI/UX requirements to uiux_team_leader_task for interface design
+    - Delegate integration work to combiner_task for system component assembly  
+    - Assign analytics and metrics work to aggregator_task for data processing
+    - Ensure proper sequencing of dependent tasks across different agents
+    
+    **PROJECT PLANNING & TRACKING:**
+    - Create comprehensive TODO lists breaking down subscription system features
+    - Assign specific deliverables to appropriate specialist agents
+    - Monitor progress across all delegated tasks and maintain project timeline
+    - Facilitate communication between different specialist teams
+    
+    **QUALITY ASSURANCE:**
+    - Review outputs from all delegated agents for consistency
+    - Ensure subscription system components integrate seamlessly
+    - Validate that all subscription tiers are properly implemented
+    - Coordinate final testing and deployment preparation
+    
+    **HUMAN-IN-THE-LOOP COORDINATION:**
+    - Present key decisions and options to users for approval
+    - Gather additional requirements when needed for subscription features
+    - Facilitate feedback integration across all project components
+    
+    Context: {user_prompt}
+  expected_output: >
+    - Comprehensive project breakdown with subscription-focused task assignments
+    - Structured delegation plan mapping requirements to specialist agents
+    - Timeline with dependencies clearly identified
+    - Progress tracking framework for subscription system implementation
+    - Clear next steps and priority task identification
+  agent: manager_agent
+
+uiux_team_leader_task:
+  description: >
+    **SUBSCRIPTION-FOCUSED UI/UX DESIGN:**
+    
+    **PRICING & SUBSCRIPTION INTERFACES:**
+    - Design comprehensive subscription plan comparison tables showing all 5 tiers
+    - Create intuitive upgrade/downgrade flow interfaces with clear feature differentials
+    - Design pricing displays highlighting monthly/annual options with 10% discount visibility
+    - Implement responsive subscription management dashboards for different user types
+    
+    **USER EXPERIENCE OPTIMIZATION:**
+    - Design onboarding flows that guide users from Free tier to premium subscriptions
+    - Create usage tracking interfaces showing API call limits and consumption
+    - Design notification systems for approaching subscription limits
+    - Implement conversion-optimized call-to-action components for upgrades
+    
+    **REPOSITORY & AUTHENTICATION WORKFLOW:**
+    - Clone base project repositories using clone_github_repo tool when needed
+    - Explore existing codebase structure using explore_cloned_repo tool
+    - Fetch authentication configuration files using get_github_file tool
+    - Integrate authentication UX with subscription tier verification
+    
+    **TECHNICAL UI IMPLEMENTATION:**
+    - Generate Django template structures with subscription-aware components
+    - Create JavaScript interactive elements for subscription management
+    - Design API documentation interfaces showing tier-specific endpoints
+    - Implement real-time update indicators (3s vs 60s) based on subscription level
+    
+    **ACCESSIBILITY & RESPONSIVE DESIGN:**
+    - Ensure WCAG compliance across all subscription interfaces
+    - Optimize for mobile-first subscription sign-up experiences
+    - Create consistent design system for subscription-related components
+    - Test user flows across different devices and screen sizes
+    
+    **USER FEEDBACK INTEGRATION:**
+    - Use ask_user tool to gather specific UI/UX requirements and preferences
+    - Present design options and get approval for subscription interface layouts
+    - Collect feedback on user journey flows and iterate accordingly
+  expected_output: >
+    - Complete subscription-focused UI/UX design specifications
+    - Django-compatible template structures for subscription interfaces
+    - JavaScript components for interactive subscription management
+    - Responsive design system documentation with subscription-specific components
+    - User journey maps for subscription conversion optimization
+    - Integration recommendations for authentication and subscription systems
+  agent: uiux_team_leader_agent
+
+combiner_task:
+  description: >
+    **SYSTEM INTEGRATION & COMPONENT ASSEMBLY:**
+    
+    **SUBSCRIPTION SYSTEM INTEGRATION:**
+    - Combine frontend subscription interfaces with backend Django/FastAPI logic
+    - Integrate payment processing systems (Stripe, PayPal) with subscription models
+    - Merge authentication systems with subscription tier verification mechanisms
+    - Coordinate API rate limiting implementation across all subscription tiers
+    
+    **COMPONENT ASSEMBLY WORKFLOW:**
+    - Assemble HTML templates using create_html_files_from_output tool
+    - Integrate CSS stylesheets using create_css_files_from_output tool
+    - Combine multiple UI components into cohesive subscription management interfaces
+    - Merge different authentication flows with subscription upgrade prompts
+    
+    **API & BACKEND INTEGRATION:**
+    - Integrate subscription verification with API endpoint access control
+    - Combine usage tracking systems with billing cycle management
+    - Merge real-time data updates (3s) with subscription tier verification
+    - Integrate notification systems with subscription status changes
+    
+    **DATABASE & DATA FLOW INTEGRATION:**
+    - Combine user authentication data with subscription tier information
+    - Integrate usage metrics with subscription billing calculations
+    - Merge historical data access with Ultimate tier verification
+    - Combine technical indicator APIs with subscription level validation
+    
+    **TESTING & VALIDATION INTEGRATION:**
+    - Integrate end-to-end testing for subscription upgrade/downgrade flows
+    - Combine unit tests for subscription logic with integration tests
+    - Validate data consistency across integrated subscription components
+    - Test API access control integration across all subscription tiers
+    
+    **HUMAN INTERACTION & FEEDBACK:**
+    - Use ask_user tool to clarify integration requirements and preferences
+    - Present integration options and get approval for technical approaches
+    - Gather feedback on integrated system performance and user experience
+  expected_output: >
+    - Fully integrated subscription management system with all components working together
+    - HTML templates and CSS files created and properly linked
+    - API integration documentation with subscription tier access controls
+    - Database schema integration for subscription and usage tracking
+    - Test suite for integrated subscription system functionality
+    - Performance benchmarks for integrated system components
+    - Integration architecture documentation with subscription-specific considerations
+  agent: combiner_agent
+
+aggregator_task:
+  description: >
+    **SUBSCRIPTION ANALYTICS & DATA AGGREGATION:**
+    
+    **USAGE METRICS AGGREGATION:**
+    - Collect and process API usage data across all 5 subscription tiers
+    - Aggregate real-time vs standard update preferences by subscription level
+    - Track feature usage patterns for technical indicators and historical data
+    - Process subscription conversion metrics from Free to paid tiers
+    
+    **BUSINESS INTELLIGENCE ANALYTICS:**
+    - Analyze subscription churn rates and identify retention improvement opportunities
+    - Calculate revenue metrics and growth trends across different subscription plans
+    - Generate insights on optimal pricing strategies based on usage patterns
+    - Identify high-value features driving subscription upgrades
+    
+    **API PERFORMANCE ANALYTICS:**
+    - Monitor API rate limits and usage patterns per subscription tier
+    - Analyze response times and system performance under different load conditions
+    - Track technical/historical data access patterns for Ultimate tier users
+    - Generate recommendations for API optimization and caching strategies
+    
+    **USER BEHAVIOR ANALYSIS:**
+    - Aggregate user journey data from free tier to premium subscriptions
+    - Analyze feature adoption rates across different subscription levels
+    - Process user feedback and satisfaction metrics by subscription tier
+    - Identify usage patterns that predict subscription upgrades or downgrades
+    
+    **REPORTING & VISUALIZATION:**
+    - Generate automated subscription health reports with key performance indicators
+    - Create data pipelines for subscription billing and usage calculation
+    - Build predictive models for subscription growth and churn analysis
+    - Produce actionable recommendations based on aggregated subscription data
+    
+    **REAL-TIME MONITORING:**
+    - Implement real-time dashboards for subscription system health monitoring
+    - Track live usage metrics and alert for approaching subscription limits
+    - Monitor payment processing success rates across different subscription tiers
+    - Provide real-time analytics for business decision making
+    
+    **HUMAN INTERACTION & INSIGHTS:**
+    - Use ask_user tool to understand specific analytics requirements and KPIs
+    - Present data insights and recommendations for business strategy optimization
+    - Gather feedback on reporting formats and analytical dashboard preferences
+  expected_output: >
+    - Comprehensive subscription analytics dashboard with real-time metrics
+    - Usage pattern analysis reports with actionable business insights
+    - Subscription conversion funnel analysis with optimization recommendations
+    - API performance benchmarks and optimization suggestions
+    - Predictive models for subscription growth and churn prevention
+    - Automated reporting system for subscription business intelligence
+    - Data pipeline documentation for subscription analytics architecture
+    - Business strategy recommendations based on aggregated subscription data
+  agent: aggregator_agent
+

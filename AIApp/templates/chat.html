@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>WopeAI</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            margin: 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+        
+        header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            transition: all 0.3s ease;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .logo {
+            font-weight: 800;
+            font-size: 1.5rem;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: -0.02em;
+        }
+        
+        nav {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+        }
+        
+        nav a {
+            text-decoration: none;
+            color: #4a5568;
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        nav a:hover {
+            color: #667eea;
+            transform: translateY(-1px);
+        }
+        
+        .cta-button {
+            background: linear-gradient(135deg, #667eea, #764ba2) !important;
+            color: white !important;
+            padding: 0.75rem 1.5rem !important;
+            border-radius: 50px !important;
+            font-weight: 600 !important;
+            text-transform: none !important;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4) !important;
+            transition: all 0.3s ease !important;
+        }
+        
+        .cta-button:hover {
+            transform: translateY(-2px) !important;
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.6) !important;
+        }
+        
+        .hero {
+            text-align: center;
+            padding: 6rem 1rem 4rem;
+            color: white;
+        }
+        
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            font-size: 0.875rem;
+            font-weight: 500;
+            margin-bottom: 2rem;
+            color: rgba(255, 255, 255, 0.9);
+        }
+        
+        .hero h2 {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            line-height: 1.1;
+            letter-spacing: -0.02em;
+            background: linear-gradient(135deg, #ffffff 0%, #e2e8f0 100%);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .hero p {
+            font-size: 1.25rem;
+            margin-bottom: 3rem;
+            color: rgba(255, 255, 255, 0.8);
+            font-weight: 400;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.6;
+        }
+        
+        .input-container {
+            max-width: 700px;
+            margin: 0 auto 3rem;
+            position: relative;
+            background: white;
+            border-radius: 20px;
+            padding: 8px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .input-container:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+        }
+        
+        .input-container textarea {
+            width: 100%;
+            padding: 1.5rem 4rem 1.5rem 1.5rem;
+            border: none;
+            border-radius: 16px;
+            resize: none;
+            font-size: 1.1rem;
+            font-family: inherit;
+            outline: none;
+            background: transparent;
+            color: #2d3748;
+            line-height: 1.5;
+            min-height: 60px;
+        }
+        
+        .input-container textarea::placeholder {
+            color: #a0aec0;
+            font-weight: 400;
+        }
+        
+        .send-button {
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border: none;
+            color: white;
+            padding: 0.75rem;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 44px;
+            height: 44px;
+        }
+        
+        .send-button:hover {
+            transform: translateY(-50%) scale(1.05);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+        }
+        
+        .tags {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-bottom: 4rem;
+        }
+        
+        .tag {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: rgba(255, 255, 255, 0.9);
+            padding: 0.75rem 1.5rem;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 0.95rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+        
+        .tag:hover {
+            background: rgba(255, 255, 255, 0.25);
+            transform: translateY(-2px);
+            color: white;
+        }
+        
+        .features {
+            background: white;
+            padding: 6rem 1rem;
+            margin-top: 4rem;
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .feature-card {
+            text-align: center;
+            padding: 2rem;
+            border-radius: 16px;
+            background: #f8fafc;
+            transition: all 0.3s ease;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+        
+        .feature-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 50%;
+            margin: 0 auto 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: white;
+        }
+        
+        .feature-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: #2d3748;
+        }
+        
+        .feature-description {
+            color: #64748b;
+            line-height: 1.6;
+        }
+        
+        @media (max-width: 768px) {
+            .header-content {
+                padding: 1rem;
+            }
+            
+            nav {
+                gap: 1rem;
+            }
+            
+            nav a {
+                font-size: 0.9rem;
+            }
+            
+            .hero {
+                padding: 4rem 1rem 3rem;
+            }
+            
+            .tags {
+                gap: 0.5rem;
+            }
+            
+            .tag {
+                padding: 0.5rem 1rem;
+                font-size: 0.875rem;
+            }
+            
+            .input-container {
+                margin: 0 1rem 2rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            nav a:not(.cta-button) {
+                display: none;
+            }
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="header-content">
+            <div class="logo">WopeAI</div>
+            
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="hero-badge">
+            ✨ New: AI-powered app generation
+        </div>
+        
+        <h2>Launch apps, not prototypes</h2>
+        <div class="input-container">
+            <textarea id="prompt-input" placeholder="A discovery app for food lovers to find nearby restaurants, read reviews, and share dining experiences with friends" rows="3"></textarea>
+            <button class="send-button" id="send-btn">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M7 11L12 6L17 11M12 18V7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            </button>
+        </div>
+        
+        <!-- Loading indicator -->
+        <div id="loading" style="display: none; text-align: center; color: white; margin-top: 2rem;">
+            <div style="display: inline-block; width: 20px; height: 20px; border: 2px solid #ffffff; border-radius: 50%; border-top-color: transparent; animation: spin 1s ease-in-out infinite; margin-right: 10px;"></div>
+            Processing your request...
+        </div>
+        
+        <!-- Response display -->
+        <div id="response-container" style="display: none; max-width: 800px; margin: 2rem auto; background: white; border-radius: 16px; padding: 2rem; box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);">
+            <h3 style="color: #2d3748; margin-bottom: 1rem;">AI Response:</h3>
+            <div id="response-content" style="color: #4a5568; line-height: 1.6; white-space: pre-wrap;"></div>
+            <button id="new-prompt-btn" style="background: linear-gradient(135deg, #667eea, #764ba2); color: white; border: none; padding: 0.75rem 1.5rem; border-radius: 8px; cursor: pointer; margin-top: 1rem; font-weight: 500;">Ask Another Question</button>
+        </div>
+
+    </section>
+
+    <section class="features">
+        <div class="container">
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">🚀</div>
+                    <div class="feature-title">Lightning Fast</div>
+                    <div class="feature-description">Build production-ready apps in minutes, not months. Our AI understands your requirements and generates optimized code instantly.</div>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">🎨</div>
+                    <div class="feature-title">Beautiful Design</div>
+                    <div class="feature-description">Every app comes with modern, responsive designs that look great on any device. Customize colors, layouts, and branding with ease.</div>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">⚡</div>
+                    <div class="feature-title">Smart Automation</div>
+                    <div class="feature-description">Intelligent workflows and automations handle the complex logic, so you can focus on what matters most - your business.</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const promptInput = document.getElementById('prompt-input');
+            const sendBtn = document.getElementById('send-btn');
+            const loading = document.getElementById('loading');
+            const responseContainer = document.getElementById('response-container');
+            const responseContent = document.getElementById('response-content');
+            const newPromptBtn = document.getElementById('new-prompt-btn');
+            const inputContainer = document.querySelector('.input-container');
+            
+            // Function to send prompt to backend
+            async function sendPrompt() {
+                const prompt = promptInput.value.trim();
+                
+                if (!prompt) {
+                    alert('Please enter a prompt!');
+                    return;
+                }
+                
+                // Show loading, hide response
+                loading.style.display = 'block';
+                responseContainer.style.display = 'none';
+                inputContainer.style.display = 'none';
+                sendBtn.disabled = true;
+                
+                try {
+                    const response = await fetch('/process/', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({ prompt: prompt })
+                    });
+                    
+                    const data = await response.json();
+                    
+                    // Hide loading
+                    loading.style.display = 'none';
+                    
+                    if (data.success) {
+                        // Show response
+                        responseContent.textContent = data.response;
+                        responseContainer.style.display = 'block';
+                    } else {
+                        // Show error
+                        responseContent.textContent = 'Error: ' + data.error;
+                        responseContainer.style.display = 'block';
+                    }
+                    
+                } catch (error) {
+                    // Hide loading
+                    loading.style.display = 'none';
+                    
+                    // Show error
+                    responseContent.textContent = 'Network error: ' + error.message;
+                    responseContainer.style.display = 'block';
+                }
+            }
+            
+            // Function to reset form
+            function resetForm() {
+                promptInput.value = '';
+                responseContainer.style.display = 'none';
+                inputContainer.style.display = 'block';
+                sendBtn.disabled = false;
+            }
+            
+            // Event listeners
+            sendBtn.addEventListener('click', sendPrompt);
+            newPromptBtn.addEventListener('click', resetForm);
+            
+            // Allow Enter key to send (Shift+Enter for new line)
+            promptInput.addEventListener('keydown', function(e) {
+                if (e.key === 'Enter' && !e.shiftKey) {
+                    e.preventDefault();
+                    sendPrompt();
+                }
+            });
+        });
+    </script>
+
+</body>
+</html>
