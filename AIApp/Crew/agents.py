@@ -1,5 +1,6 @@
 from crewai import Agent, LLM
 
+
 def create_manager_agent(agents_config: dict) -> Agent:
 	return Agent(
 		config=agents_config['manager_agent'],

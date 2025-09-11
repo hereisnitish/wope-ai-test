@@ -49,10 +49,10 @@ class DjangoProjectGeneratorCrew():
 	def crew(self) -> Crew:
 		return Crew(
 			agents= [
+				self.manager_agent(),
 				self.uiux_team_leader_agent(),
-				self.aggregator_agent(),
 				self.combiner_agent(),
-    
+				self.aggregator_agent(),
 			],  # Automatically collected by the @agent decorator
 			tasks= [
 				self.manager_task(),
@@ -61,8 +61,7 @@ class DjangoProjectGeneratorCrew():
 				self.aggregator_task(),
 			],  # Automatically collected by the @task decorator
 			verbose=True,
-			process=Process.hierarchical,
-			manager_agent=self.manager_agent(),
+			process=Process.sequential,  # Changed to sequential for proper workflow
 		)
 
 
