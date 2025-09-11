@@ -2,8 +2,8 @@ import os
 import json
 from crewai import Agent, Crew, Process, Task
 from crewai.project import CrewBase, agent, crew, task
-from .agents import create_manager_agent, uiux_team_leader_agent as create_uiux_team_leader_agent, combiner_agent as create_combiner_agent, aggregator_agent as create_aggregator_agent
-from .tasks import create_manager_task, uiux_team_leader_task as create_uiux_team_leader_task, combiner_task as create_combiner_task, aggregator_task as create_aggregator_task
+from .agents import create_manager_agent, uiux_team_leader_agent as create_uiux_team_leader_agent, combiner_agent as create_combiner_agent,  get_components_agent as create_get_components_agent, create_component_agent as create_create_component_agent
+from .tasks import create_manager_task, uiux_team_leader_task as create_uiux_team_leader_task, combiner_task as create_combiner_task, get_components_task as create_get_components_task, create_component_task as create_create_component_task
 
 
 
@@ -25,8 +25,12 @@ class DjangoProjectGeneratorCrew():
 		return create_combiner_agent(self.agents_config)
 
 	@agent
-	def aggregator_agent(self) -> Agent:
-		return create_aggregator_agent(self.agents_config)
+	def get_components_agent(self) -> Agent:
+		return create_get_components_agent(self.agents_config)
+
+	@agent
+	def create_component_agent(self) -> Agent:
+		return create_create_component_agent(self.agents_config)
 
 	@task
 	def manager_task(self) -> Task:
@@ -41,8 +45,12 @@ class DjangoProjectGeneratorCrew():
 		return create_combiner_task(self.tasks_config, self.combiner_agent())
 
 	@task
-	def aggregator_task(self) -> Task:
-		return create_aggregator_task(self.tasks_config, self.aggregator_agent())
+	def get_components_task(self) -> Task:
+		return create_get_components_task(self.tasks_config, self.get_components_agent())
+
+	@task
+	def create_component_task(self) -> Task:
+		return create_create_component_task(self.tasks_config, self.create_component_agent())
 
 
 	@crew
@@ -52,13 +60,16 @@ class DjangoProjectGeneratorCrew():
 				self.manager_agent(),
 				self.uiux_team_leader_agent(),
 				self.combiner_agent(),
-				self.aggregator_agent(),
+				self.get_components_agent(),
+				self.create_component_agent(),
+				
 			],  # Automatically collected by the @agent decorator
 			tasks= [
 				self.manager_task(),
 				self.uiux_team_leader_task(),
 				self.combiner_task(),
-				self.aggregator_task(),
+				self.get_components_task(),
+				self.create_component_task(),
 			],  # Automatically collected by the @task decorator
 			verbose=True,
 			process=Process.sequential,  # Changed to sequential for proper workflow

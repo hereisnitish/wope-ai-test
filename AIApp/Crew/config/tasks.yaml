@@ -20,8 +20,10 @@ manager_task:
 
 uiux_team_leader_task:
   description: >
-    **UI/UX PLANNING & COMPONENT MANAGEMENT:**
-    - Based on the requirements provided by the Manager, create a structured list of all components needed for the page.
+    **COMPONENT PLANNING:**
+    - Identify all sections and elements needed for the page based on user requirements.
+    - For typography, use the /snippets-project/Portfolio/Assets/css folder.
+    - Make a list of the components needed for the page.
     - Focus on designing essential components such as:
       - Header/Navigation
       - Hero Section
@@ -31,49 +33,82 @@ uiux_team_leader_task:
       - Testimonials/Reviews Section
       - Contact Section
       - Footer
-    - Use the get_existing_components tool to check if these components are already available in the database.
-    - For each missing component, use the create_new_component tool to generate it.
-    - Ensure all components are created and file paths are collected for the next step.
-    - Provide a complete list of component file paths (both existing and newly created) to the combiner agent.
-    - At most 5 components should be created at a time.
-    - Use Html, Css, Tailwind and Javascript to create the components.
+    
+    **COLLABORATION:**
+    - Work closely with the Manager to understand priorities.
+    - Share updates on component availability and design recommendations.
+    - Ensure that created or reused components align with the project's goals.
+    - Provide a complete list of required components to the get_components_agent.
 
   expected_output: >
-    - Complete list of required components with their file paths.
-    - All missing components created using the create_new_component tool.
-    - List of component file paths ready for combination.
+    - Complete list of required components with their specifications.
     - UI/UX design plan ensuring cohesive and interactive user experience.
+    - Component requirements and design recommendations.
   agent: uiux_team_leader_agent
+
+
+get_components_task:
+  description: >
+    **COMPONENT SEARCH:**
+    - Search for components in the database using the Check Existing Components tool.
+    - Use the get_existing_components tool to search for components based on the list provided by UI/UX Team Leader.
+    - Check availability of each required component.
+    
+    **COMPONENT RETRIEVAL:**
+    - Return a list of components with their details.
+    - Identify which components are available and which need to be created.
+    - Provide file paths for existing components.
+    - Pass the list of missing components to the create_component_agent.
+
+  expected_output: >
+    - List of existing components with their file paths.
+    - List of missing components that need to be created.
+    - Component availability report.
+  agent: get_components_agent
+
+
+create_component_task:
+  description: >
+    **COMPONENT CREATION:**
+    - Create new components in HTML/CSS/JS using the Create New Component tool.
+    - Use the create_new_component tool to create missing components.
+    - Focus on components identified as missing by the get_components_agent.
+    
+    **COMPONENT DEVELOPMENT:**
+    - Develop components in HTML/CSS/JS using the Create New Component tool.
+    - Use Html, Css, Tailwind and Javascript to create the components.
+    - At most 5 components should be created at a time.
+    - Ensure all components are created and file paths are collected.
+
+  expected_output: >
+    - Newly created components with their file paths.
+    - Complete list of all component file paths (existing and newly created).
+    - Components ready for integration.
+  agent: create_component_agent
 
 
 combiner_task:
   description: >
-    **COMPONENT ASSEMBLY & INTEGRATION:**
-    - Receive the list of component file paths from the UI/UX Team Leader.
+    **INTEGRATION WORKFLOW:**
+    - Assemble existing components provided by the get_components_agent.
+    - Integrate newly generated components from the create_component_agent.
+    - Ensure smooth interaction between all components.
+    - Validate the structure, functionality, and design cohesion.
+    
+    **CONFLICT RESOLUTION:**
+    - Identify and resolve compatibility issues between components.
+    - Standardize naming, styling, and data structures for consistent integration.
+    
+    **TESTING & OPTIMIZATION:**
+    - Verify that the combined components work flawlessly.
+    - Optimize for performance, responsiveness, and scalability.
     - Use the combine_components tool to merge all individual HTML components into a single complete HTML page.
     - Ensure proper HTML structure with DOCTYPE, head, and body tags.
-    - Add basic CSS styling to ensure components flow together seamlessly.
-    - Validate that all components are properly integrated and the page structure is complete.
-    - Pass the complete HTML content to the aggregator agent for final processing.
     - Use Html, Css, Tailwind and Javascript to combine the components.
 
   expected_output: >
     - Complete HTML page with all components properly integrated.
     - File path to the combined HTML page.
     - HTML content ready for final review and saving.
+    - Integration report with optimization recommendations.
   agent: combiner_agent
-
-aggregator_task:
-  description: >
-    **FINAL REVIEW & HTML FILE SAVING:**
-    - Receive the file path to the combined HTML page from the Combiner agent.
-    - Review the integrated page for consistency, responsiveness, and usability.
-    - Check that all components are properly integrated and the page structure is complete.
-    - Use the copy_html_file tool to copy the combined HTML file to a final location with a proper filename.
-    - Provide a final validation report and confirm the HTML file has been successfully saved.
-
-  expected_output: >
-    - Final HTML file saved to the outputs directory with proper HTML formatting.
-    - File path to the saved HTML file.
-    - Final validation report confirming the page is ready for use.
-  agent: aggregator_agent

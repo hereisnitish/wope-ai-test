@@ -21,10 +21,10 @@ def get_user_input(prompt: str) -> str:
 #All tools
 
 @tool("get_existing_components")
-def get_existing_components(category: str) -> List[PortfolioTemplate]:
-    """Get existing portfolio template components by category. Returns a list of templates with their details."""
+def get_existing_components() -> List[PortfolioTemplate]:
+    """Get all existing portfolio template components. Returns a list of templates with their details."""
 
-    response = PortfolioTemplate.objects.filter(category=category)
+    response = PortfolioTemplate.objects.all()
 
     data = [
         {
