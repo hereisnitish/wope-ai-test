@@ -52,6 +52,7 @@ class DjangoProjectGeneratorCrew():
 				self.uiux_team_leader_agent(),
 				self.aggregator_agent(),
 				self.combiner_agent(),
+    
 			],  # Automatically collected by the @agent decorator
 			tasks= [
 				self.manager_task(),
