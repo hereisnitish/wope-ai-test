@@ -1,0 +1,81 @@
+{
+  "Hero": [
+    {
+      "name": "hero1",
+      "display_name": "Simple Welcome Hero",
+      "description": "Clean and minimal hero section with welcome message, subtitle, and contact button. Perfect for a straightforward introduction."
+    },
+    {
+      "name": "hero2", 
+      "display_name": "Image Background Hero",
+      "description": "Hero section with background image overlay, personal introduction, and call-to-action button linking to work portfolio."
+    }
+  ],
+  "About": [
+    {
+      "name": "about1",
+      "display_name": "Stats-Based About",
+      "description": "Professional about section featuring personal introduction with key statistics cards showing projects completed, years of experience, and happy clients."
+    },
+    {
+      "name": "about2",
+      "display_name": "Profile & Skills About", 
+      "description": "Comprehensive about section with profile image, social media links, skills overview with icons, and downloadable CV button."
+    }
+  ],
+  "Skills": [
+    {
+      "name": "skills1",
+      "display_name": "Category Grid Skills",
+      "description": "Interactive skills section organized in categories (Frontend, Backend, Tools) with hover tooltips and detailed descriptions for each technology."
+    },
+    {
+      "name": "skills2",
+      "display_name": "Progress Bar Skills", 
+      "description": "Visual skills representation using animated progress bars with percentage levels, plus summary cards highlighting specialization areas."
+    }
+  ],
+  "Projects": [
+    {
+      "name": "projects1",
+      "display_name": "Filterable Project Grid",
+      "description": "Interactive project showcase with filtering tabs by category (Web Apps, Mobile, Design), hover overlays with preview/code links, and technology tags."
+    },
+    {
+      "name": "projects2",
+      "display_name": "Masonry Project Gallery",
+      "description": "Pinterest-style masonry layout for projects with modal popup system for detailed project information and navigation between projects."
+    }
+  ],
+  "Testimonials": [
+    {
+      "name": "testimonials1",
+      "display_name": "Client Testimonial Cards",
+      "description": "Grid layout of client testimonials featuring quote icons, client feedback, profile photos, company information, and 5-star ratings."
+    }
+  ],
+  "Contact": [
+    {
+      "name": "contact1",
+      "display_name": "Traditional Contact Form",
+      "description": "Classic contact section with contact information cards (email, phone, location) and fully validated contact form with error handling."
+    },
+    {
+      "name": "contact2", 
+      "display_name": "Modern Contact Cards",
+      "description": "Contemporary contact design with interactive contact method cards, social media integration, and quick contact modal popup."
+    }
+  ],
+  "Footer": [
+    {
+      "name": "footer1",
+      "display_name": "Standard Business Footer",
+      "description": "Comprehensive footer with brand section, quick navigation links, service listings, contact information, and social media icons with back-to-top button."
+    },
+    {
+      "name": "footer2",
+      "display_name": "Premium Newsletter Footer",
+      "description": "Advanced footer featuring newsletter subscription, company statistics, enhanced social media cards, contact details with availability hours, and floating visual elements."
+    }
+  ]
+}

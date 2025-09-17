@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact - Example 1</title>
+    <style>
+
+        .contact {
+          padding: 80px 20px;
+          background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+          color: white;
+          min-height: 100vh;
+          display: flex;
+          align-items: center;
+        }
+
+        .contact .container {
+          max-width: 1200px;
+          margin: 0 auto;
+          width: 100%;
+        }
+
+        .contact h2 {
+          font-size: 3rem;
+          margin-bottom: 20px;
+          text-align: center;
+          position: relative;
+          display: inline-block;
+          width: 100%;
+        }
+
+        .contact h2::after {
+          content: '';
+          position: absolute;
+          bottom: -10px;
+          left: 50%;
+          transform: translateX(-50%);
+          width: 80px;
+          height: 3px;
+          background: rgba(255, 255, 255, 0.8);
+          border-radius: 2px;
+        }
+
+        .contact > .container > p {
+          text-align: center;
+          font-size: 1.2rem;
+          margin-bottom: 60px;
+          opacity: 0.9;
+          max-width: 600px;
+          margin-left: auto;
+          margin-right: auto;
+        }
+
+        .contact-content {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 60px;
+          align-items: start;
+        }
+
+        /* Contact Info Styles */
+        .contact-info {
+          display: flex;
+          flex-direction: column;
+          gap: 40px;
+        }
+
+        .info-item {
+          display: flex;
+          align-items: center;
+          padding: 25px;
+          background: rgba(255, 255, 255, 0.1);
+          border-radius: 15px;
+          backdrop-filter: blur(10px);
+          border: 1px solid rgba(255, 255, 255, 0.2);
+          transition: all 0.3s ease;
+          animation: slideInLeft 0.8s ease-out;
+        }
+
+        .info-item:hover {
+          transform: translateY(-5px);
+          background: rgba(255, 255, 255, 0.15);
+          box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .info-item .icon {
+          width: 50px;
+          height: 50px;
+          margin-right: 20px;
+          color: #fff;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+
+        .info-item .icon svg {
+          width: 30px;
+          height: 30px;
+        }
+
+        .info-details h3 {
+          font-size: 1.3rem;
+          margin-bottom: 5px;
+          color: #fff;
+        }
+
+        .info-details p {
+          font-size: 1rem;
+          color: rgba(255, 255, 255, 0.8);
+          margin: 0;
+        }
+
+        /* Contact Form Styles */
+        .contact-form {
+          background: rgba(255, 255, 255, 0.1);
+          padding: 40px;
+          border-radius: 20px;
+          backdrop-filter: blur(10px);
+          border: 1px solid rgba(255, 255, 255, 0.2);
+          animation: slideInRight 0.8s ease-out;
+        }
+
+        .form-group {
+          margin-bottom: 25px;
+          position: relative;
+        }
+
+        .form-group input,
+        .form-group textarea {
+          width: 100%;
+          padding: 15px 20px;
+          border: 2px solid rgba(255, 255, 255, 0.3);
+          border-radius: 10px;
+          background: rgba(255, 255, 255, 0.1);
+          color: white;
+          font-size: 1rem;
+          transition: all 0.3s ease;
+          backdrop-filter: blur(5px);
+        }
+
+        .form-group input::placeholder,
+        .form-group textarea::placeholder {
+          color: rgba(255, 255, 255, 0.7);
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+          outline: none;
+          border-color: rgba(255, 255, 255, 0.6);
+          background: rgba(255, 255, 255, 0.15);
+          transform: translateY(-2px);
+          box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .error-message {
+          color: #ff6b6b;
+          font-size: 0.9rem;
+          margin-top: 5px;
+          display: block;
+          opacity: 0;
+          transition: all 0.3s ease;
+        }
+
+        .error-message.show {
+          opacity: 1;
+        }
+
+        .submit-btn {
+          width: 100%;
+          padding: 15px;
+          background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+          border: none;
+          border-radius: 10px;
+          color: white;
+          font-size: 1.1rem;
+          font-weight: 600;
+          cursor: pointer;
+          transition: all 0.3s ease;
+          position: relative;
+          overflow: hidden;
+        }
+
+        .submit-btn:hover {
+          transform: translateY(-2px);
+          box-shadow: 0 15px 30px rgba(238, 90, 36, 0.4);
+          background: linear-gradient(135deg, #ee5a24, #ff6b6b);
+        }
+
+        .submit-btn:active {
+          transform: translateY(0);
+        }
+
+        .submit-btn.loading .btn-text {
+          opacity: 0;
+        }
+
+        .loading-spinner {
+          width: 20px;
+          height: 20px;
+          border: 2px solid rgba(255, 255, 255, 0.3);
+          border-top: 2px solid white;
+          border-radius: 50%;
+          animation: spin 1s linear infinite;
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          opacity: 0;
+          transition: opacity 0.3s ease;
+        }
+
+        .submit-btn.loading .loading-spinner {
+          opacity: 1;
+        }
+
+        @keyframes spin {
+          0% { transform: translate(-50%, -50%) rotate(0deg); }
+          100% { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+
+        .form-status {
+          margin-top: 20px;
+          padding: 15px;
+          border-radius: 8px;
+          text-align: center;
+          font-weight: 500;
+          opacity: 0;
+          transition: all 0.3s ease;
+        }
+
+        .form-status.success {
+          background: rgba(46, 213, 115, 0.2);
+          color: #2ed573;
+          border: 1px solid rgba(46, 213, 115, 0.3);
+          opacity: 1;
+        }
+
+        .form-status.error {
+          background: rgba(255, 107, 107, 0.2);
+          color: #ff6b6b;
+          border: 1px solid rgba(255, 107, 107, 0.3);
+          opacity: 1;
+        }
+
+        /* Animations */
+        @keyframes slideInLeft {
+          from {
+            opacity: 0;
+            transform: translateX(-50px);
+          }
+          to {
+            opacity: 1;
+            transform: translateX(0);
+          }
+        }
+
+        @keyframes slideInRight {
+          from {
+            opacity: 0;
+            transform: translateX(50px);
+          }
+          to {
+            opacity: 1;
+            transform: translateX(0);
+          }
+        }
+
+        .contact.animate .info-item {
+          animation: slideInLeft 0.8s ease-out;
+        }
+
+        .contact.animate .contact-form {
+          animation: slideInRight 0.8s ease-out;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+          .contact {
+            padding: 60px 15px;
+          }
+          
+          .contact h2 {
+            font-size: 2.5rem;
+          }
+          
+          .contact-content {
+            grid-template-columns: 1fr;
+            gap: 40px;
+          }
+          
+          .contact-form {
+            padding: 30px 20px;
+          }
+          
+          .info-item {
+            padding: 20px;
+          }
+          
+          .info-item .icon {
+            width: 40px;
+            height: 40px;
+            margin-right: 15px;
+          }
+          
+          .info-item .icon svg {
+            width: 25px;
+            height: 25px;
+          }
+        }
+
+        @media (max-width: 480px) {
+          .contact h2 {
+            font-size: 2rem;
+          }
+          
+          .contact-form {
+            padding: 20px 15px;
+          }
+          
+          .form-group input,
+          .form-group textarea {
+            padding: 12px 15px;
+          }
+        }
+    </style>
+</head>
+<body>
+    <section id="contact1" class="contact">
+      <div class="container">
+        <h2>Get In Touch</h2>
+        <p>I'd love to hear from you. Send me a message and I'll respond as soon as possible.</p>
+        
+        <div class="contact-content">
+          <div class="contact-info">
+            <div class="info-item">
+              <div class="icon">
+                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M3 5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5z" stroke="currentColor" stroke-width="2"/>
+                  <path d="m3 7 9 6 9-6" stroke="currentColor" stroke-width="2"/>
+                </svg>
+              </div>
+              <div class="info-details">
+                <h3>Email</h3>
+                <p>hello@developer.com</p>
+              </div>
+            </div>
+            
+            <div class="info-item">
+              <div class="icon">
+                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" stroke="currentColor" stroke-width="2"/>
+                </svg>
+              </div>
+              <div class="info-details">
+                <h3>Phone</h3>
+                <p>+91 98765 43210</p>
+              </div>
+            </div>
+            
+            <div class="info-item">
+              <div class="icon">
+                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" stroke="currentColor" stroke-width="2"/>
+                  <circle cx="12" cy="10" r="3" stroke="currentColor" stroke-width="2"/>
+                </svg>
+              </div>
+              <div class="info-details">
+                <h3>Location</h3>
+                <p>Mumbai, India</p>
+              </div>
+            </div>
+          </div>
+          
+          <form class="contact-form" id="contactForm">
+            <div class="form-group">
+              <input type="text" id="name" name="name" placeholder="Your Name" required>
+              <span class="error-message" id="nameError"></span>
+            </div>
+            
+            <div class="form-group" >
+              <input type="email" id="email" name="email" placeholder="Your Email" required>
+              <span class="error-message" id="emailError"></span>
+            </div>
+            
+            <div class="form-group">
+              <input type="text" id="subject" name="subject" placeholder="Subject" required>
+              <span class="error-message" id="subjectError"></span>
+            </div>
+            
+            <div class="form-group">
+              <textarea id="message" name="message" placeholder="Your Message" rows="5" required></textarea>
+              <span class="error-message" id="messageError"></span>
+            </div>
+            
+            <button type="submit" class="submit-btn">
+              <span class="btn-text">Send Message</span>
+              <div class="loading-spinner"></div>
+            </button>
+            
+            <div class="form-status" id="formStatus"></div>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <script>
+        // Form validation and submission
+        class ContactForm {
+          constructor(formId) {
+            this.form = document.getElementById(formId);
+            this.submitBtn = this.form.querySelector('.submit-btn');
+            this.formStatus = document.getElementById('formStatus');
+            this.init();
+          }
+
+          init() {
+            this.form.addEventListener('submit', (e) => this.handleSubmit(e));
+            
+            // Real-time validation
+            const inputs = this.form.querySelectorAll('input, textarea');
+            inputs.forEach(input => {
+              input.addEventListener('blur', () => this.validateField(input));
+              input.addEventListener('input', () => this.clearError(input));
+            });
+          }
+
+          validateField(field) {
+            const value = field.value.trim();
+            const fieldName = field.name;
+            let isValid = true;
+            let errorMessage = '';
+
+            // Clear previous errors
+            this.clearError(field);
+
+            switch (fieldName) {
+              case 'name':
+                if (value.length < 2) {
+                  errorMessage = 'Name must be at least 2 characters long';
+                  isValid = false;
+                }
+                break;
+              
+              case 'email':
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                if (!emailRegex.test(value)) {
+                  errorMessage = 'Please enter a valid email address';
+                  isValid = false;
+                }
+                break;
+              
+              case 'subject':
+                if (value.length < 3) {
+                  errorMessage = 'Subject must be at least 3 characters long';
+                  isValid = false;
+                }
+                break;
+              
+              case 'message':
+                if (value.length < 10) {
+                  errorMessage = 'Message must be at least 10 characters long';
+                  isValid = false;
+                }
+                break;
+            }
+
+            if (!isValid) {
+              this.showError(field, errorMessage);
+            }
+
+            return isValid;
+          }
+
+          showError(field, message) {
+            const errorElement = document.getElementById(field.name + 'Error');
+            if (errorElement) {
+              errorElement.textContent = message;
+              errorElement.classList.add('show');
+            }
+            field.style.borderColor = '#ff6b6b';
+          }
+
+          clearError(field) {
+            const errorElement = document.getElementById(field.name + 'Error');
+            if (errorElement) {
+              errorElement.classList.remove('show');
+              setTimeout(() => {
+                errorElement.textContent = '';
+              }, 300);
+            }
+            field.style.borderColor = 'rgba(255, 255, 255, 0.3)';
+          }
+
+          validateAllFields() {
+            const inputs = this.form.querySelectorAll('input, textarea');
+            let allValid = true;
+
+            inputs.forEach(input => {
+              if (!this.validateField(input)) {
+                allValid = false;
+              }
+            });
+
+            return allValid;
+          }
+
+          async handleSubmit(e) {
+            e.preventDefault();
+
+            if (!this.validateAllFields()) {
+              this.showStatus('Please fix the errors above', 'error');
+              return;
+            }
+
+            // Show loading state
+            this.submitBtn.classList.add('loading');
+            this.submitBtn.disabled = true;
+
+            try {
+              // Simulate form submission (replace with actual API call)
+              await this.simulateFormSubmission();
+              
+              this.showStatus('Message sent successfully! I\'ll get back to you soon.', 'success');
+              this.form.reset();
+              
+            } catch (error) {
+              this.showStatus('Failed to send message. Please try again.', 'error');
+            } finally {
+              // Remove loading state
+              this.submitBtn.classList.remove('loading');
+              this.submitBtn.disabled = false;
+            }
+          }
+
+          simulateFormSubmission() {
+            return new Promise((resolve, reject) => {
+              setTimeout(() => {
+                // Simulate 90% success rate
+                if (Math.random() > 0.1) {
+                  resolve();
+                } else {
+                  reject(new Error('Network error'));
+                }
+              }, 2000);
+            });
+          }
+
+          showStatus(message, type) {
+            this.formStatus.textContent = message;
+            this.formStatus.className = `form-status ${type}`;
+            
+            if (type === 'success') {
+              setTimeout(() => {
+                this.formStatus.classList.remove('success');
+                this.formStatus.style.opacity = '0';
+              }, 5000);
+            }
+          }
+        }
+
+        // Intersection Observer for scroll animations
+        const observerOptions = {
+          threshold: 0.2,
+          rootMargin: '0px 0px -50px 0px'
+        };
+
+        const contactObserver = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('animate');
+              contactObserver.unobserve(entry.target);
+            }
+          });
+        }, observerOptions);
+
+        // Initialize when DOM is loaded
+        document.addEventListener('DOMContentLoaded', () => {
+          // Initialize contact form
+          if (document.getElementById('contactForm')) {
+            new ContactForm('contactForm');
+          }
+          
+          // Initialize scroll animations
+          const contactSection = document.querySelector('#contact1');
+          if (contactSection) {
+            contactObserver.observe(contactSection);
+          }
+          
+          // Add staggered animation to info items
+          const infoItems = document.querySelectorAll('.info-item');
+          infoItems.forEach((item, index) => {
+            item.style.animationDelay = `${index * 0.2}s`;
+          });
+        });
+
+        // Smooth scroll function for navigation
+        function scrollToContact() {
+          const contactElement = document.getElementById('contact1');
+          if (contactElement) {
+            contactElement.scrollIntoView({ 
+              behavior: 'smooth',
+              block: 'start'
+            });
+          }
+        }
+    </script>
+</body>
+</html>

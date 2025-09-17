@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hero Components - Portfolio</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        /* Hero Component 1 - Simple Hero */
+        .hero {
+            background: #333;
+            color: #fff;
+            text-align: center;
+            padding: 100px 20px;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 10px;
+            animation: fadeInDown 1s ease-out;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            opacity: 0.9;
+            animation: fadeInUp 1s ease-out 0.3s both;
+        }
+
+        .hero button {
+            padding: 15px 30px;
+            background: #f39c12;
+            border: none;
+            border-radius: 5px;
+            color: white;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            animation: fadeInUp 1s ease-out 0.6s both;
+        }
+
+        .hero button:hover {
+            background: #e67e22;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Hero Component 2 - Image Hero */
+        .hero-image {
+            background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+                        url('https://via.placeholder.com/1200x600') center/cover no-repeat;
+            color: white;
+            text-align: center;
+            padding: 150px 20px;
+            position: relative;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .hero-overlay {
+            z-index: 2;
+            max-width: 800px;
+        }
+
+        .hero-image h1 {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+            animation: slideInLeft 1s ease-out;
+        }
+
+        .hero-image p {
+            font-size: 1.5rem;
+            margin-bottom: 40px;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
+            animation: slideInRight 1s ease-out 0.3s both;
+        }
+
+        .cta-button {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 15px 35px;
+            background: linear-gradient(45deg, #2980b9, #3498db);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(52, 152, 219, 0.3);
+            animation: fadeIn 1s ease-out 0.6s both;
+        }
+
+        .cta-button:hover {
+            background: linear-gradient(45deg, #3498db, #5dade2);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(52, 152, 219, 0.5);
+        }
+
+        /* Animations */
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .hero-image h1 {
+                font-size: 2.5rem;
+            }
+            
+            .hero-image p {
+                font-size: 1.2rem;
+            }
+            
+            .hero-image {
+                padding: 100px 20px;
+            }
+        }
+
+        /* Component Separator */
+        .component-separator {
+            height: 2px;
+            background: linear-gradient(90deg, #3498db, #e74c3c, #2ecc71);
+            margin: 50px 0;
+            border-radius: 1px;
+        }
+
+        .component-title {
+            text-align: center;
+            font-size: 1.5rem;
+            color: #2c3e50;
+            margin: 30px 0 20px 0;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+    <!-- Hero Component 1 - Simple Hero -->
+    <div class="component-title">Hero Component 1 - Simple Hero</div>
+    <section id="hero1" class="hero">
+        <h1>Welcome to My Portfolio</h1>
+        <p>Creative Web Developer & Designer</p>
+        <button onclick="scrollToContact()">Contact Me</button>
+    </section>
+
+    <div class="component-separator"></div>
+
+    <!-- Hero Component 2 - Image Hero -->
+    <div class="component-title">Hero Component 2 - Image Hero</div>
+    <section id="hero2" class="hero-image">
+        <div class="hero-overlay">
+            <h1>Hi, I'm Alex</h1>
+            <p>Building digital experiences that matter</p>
+            <a href="#projects" class="cta-button">View My Work</a>
+        </div>
+    </section>
+
+    <script>
+        // Hero Component 1 JavaScript
+        function scrollToContact() {
+            const contactElement = document.getElementById('contact');
+            if (contactElement) {
+                contactElement.scrollIntoView({ 
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            } else {
+                console.warn('Contact element not found');
+            }
+        }
+
+        // Add typing effect to hero title
+        document.addEventListener('DOMContentLoaded', function() {
+            const heroTitle = document.querySelector('#hero1 h1');
+            if (heroTitle) {
+                const originalText = heroTitle.textContent;
+                heroTitle.textContent = '';
+                
+                let i = 0;
+                const typeWriter = setInterval(() => {
+                    heroTitle.textContent += originalText[i];
+                    i++;
+                    if (i >= originalText.length) {
+                        clearInterval(typeWriter);
+                    }
+                }, 100);
+            }
+        });
+
+        // Hero Component 2 JavaScript
+        // Smooth scroll functionality for CTA button
+        document.addEventListener('DOMContentLoaded', function() {
+            const ctaButton = document.querySelector('.cta-button');
+            
+            if (ctaButton) {
+                ctaButton.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const target = this.getAttribute('href');
+                    const targetElement = document.querySelector(target);
+                    
+                    if (targetElement) {
+                        targetElement.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }
+                });
+            }
+        });
+
+        // Parallax effect for hero background
+        window.addEventListener('scroll', function() {
+            const hero = document.querySelector('.hero-image');
+            const scrolled = window.pageYOffset;
+            const parallaxSpeed = 0.5;
+            
+            if (hero) {
+                hero.style.transform = `translateY(${scrolled * parallaxSpeed}px)`;
+            }
+        });
+
+        // Dynamic background images (optional)
+        const backgroundImages = [
+            'https://via.placeholder.com/1200x600/2c3e50/ffffff?text=Background+1',
+            'https://via.placeholder.com/1200x600/34495e/ffffff?text=Background+2',
+            'https://via.placeholder.com/1200x600/2980b9/ffffff?text=Background+3'
+        ];
+
+        let currentBgIndex = 0;
+
+        function changeBackground() {
+            const hero = document.querySelector('.hero-image');
+            if (hero) {
+                currentBgIndex = (currentBgIndex + 1) % backgroundImages.length;
+                hero.style.backgroundImage = `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), 
+                                             url('${backgroundImages[currentBgIndex]}')`;
+            }
+        }
+
+        // Change background every 10 seconds
+        setInterval(changeBackground, 10000);
+    </script>
+</body>
+</html>

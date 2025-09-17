@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Me - Example 2</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .about-image-text {
+          padding: 80px 20px;
+          background: #fff;
+        }
+
+        .about-image-text .container {
+          max-width: 1200px;
+          margin: 0 auto;
+        }
+
+        .about-content {
+          display: grid;
+          grid-template-columns: 1fr 1.5fr;
+          gap: 60px;
+          align-items: center;
+        }
+
+        .about-image {
+          position: relative;
+          text-align: center;
+        }
+
+        .about-image img {
+          width: 300px;
+          height: 300px;
+          border-radius: 50%;
+          object-fit: cover;
+          border: 5px solid #3498db;
+          transition: all 0.3s ease;
+          box-shadow: 0 20px 40px rgba(52, 152, 219, 0.2);
+        }
+
+        .about-image img:hover {
+          transform: scale(1.05);
+          border-color: #2980b9;
+          box-shadow: 0 25px 50px rgba(52, 152, 219, 0.3);
+        }
+
+        .image-overlay {
+          position: absolute;
+          top: 0;
+          left: 50%;
+          transform: translateX(-50%);
+          width: 300px;
+          height: 300px;
+          border-radius: 50%;
+          background: rgba(52, 152, 219, 0.9);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          opacity: 0;
+          transition: all 0.3s ease;
+        }
+
+        .about-image:hover .image-overlay {
+          opacity: 1;
+        }
+
+        .social-links {
+          display: flex;
+          gap: 20px;
+        }
+
+        .social-links a {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          width: 50px;
+          height: 50px;
+          background: rgba(255, 255, 255, 0.2);
+          border-radius: 50%;
+          color: white;
+          text-decoration: none;
+          font-size: 1.2rem;
+          transition: all 0.3s ease;
+        }
+
+        .social-links a:hover {
+          background: white;
+          color: #3498db;
+          transform: scale(1.1);
+        }
+
+        .about-text h2 {
+          font-size: 2.5rem;
+          color: #2c3e50;
+          margin-bottom: 10px;
+          position: relative;
+        }
+
+        .about-text h2::after {
+          content: '';
+          position: absolute;
+          bottom: -5px;
+          left: 0;
+          width: 60px;
+          height: 3px;
+          background: linear-gradient(90deg, #3498db, #2980b9);
+          border-radius: 2px;
+        }
+
+        .about-text h3 {
+          font-size: 1.3rem;
+          color: #3498db;
+          margin-bottom: 20px;
+          font-weight: 500;
+        }
+
+        .about-text p {
+          font-size: 1.1rem;
+          line-height: 1.8;
+          color: #666;
+          margin-bottom: 40px;
+        }
+
+        .skills-overview {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+          gap: 20px;
+          margin-bottom: 40px;
+        }
+
+        .skill-item {
+          display: flex;
+          align-items: center;
+          gap: 15px;
+          padding: 20px;
+          background: #f8f9fa;
+          border-radius: 10px;
+          border-left: 4px solid #3498db;
+          transition: all 0.3s ease;
+        }
+
+        .skill-item:hover {
+          transform: translateX(10px);
+          box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+          background: #fff;
+        }
+
+        .skill-icon {
+          font-size: 2rem;
+          width: 50px;
+          text-align: center;
+        }
+
+        .skill-item h4 {
+          margin: 0 0 5px 0;
+          color: #2c3e50;
+          font-size: 1.1rem;
+        }
+
+        .skill-item p {
+          margin: 0;
+          color: #666;
+          font-size: 0.9rem;
+        }
+
+        .download-cv {
+          padding: 15px 30px;
+          background: linear-gradient(45deg, #3498db, #2980b9);
+          color: white;
+          border: none;
+          border-radius: 50px;
+          font-size: 1rem;
+          font-weight: 600;
+          cursor: pointer;
+          transition: all 0.3s ease;
+          display: inline-flex;
+          align-items: center;
+          gap: 10px;
+          box-shadow: 0 5px 15px rgba(52, 152, 219, 0.3);
+        }
+
+        .download-cv:hover {
+          transform: translateY(-3px);
+          box-shadow: 0 10px 25px rgba(52, 152, 219, 0.4);
+          background: linear-gradient(45deg, #2980b9, #3498db);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+          .about-content {
+            grid-template-columns: 1fr;
+            gap: 40px;
+            text-align: center;
+          }
+          
+          .about-image img {
+            width: 250px;
+            height: 250px;
+          }
+          
+          .image-overlay {
+            width: 250px;
+            height: 250px;
+          }
+          
+          .about-text h2 {
+            font-size: 2rem;
+          }
+          
+          .skills-overview {
+            grid-template-columns: 1fr;
+          }
+          
+          .about-text h2::after {
+            left: 50%;
+            transform: translateX(-50%);
+          }
+        }
+    </style>
+</head>
+<body>
+    <section id="about2" class="about-image-text">
+      <div class="container">
+        <div class="about-content">
+          <div class="about-image">
+            <img src="https://via.placeholder.com/300x300/3498db/ffffff?text=Profile" alt="Profile Picture">
+            <div class="image-overlay">
+              <div class="social-links">
+                <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                <a href="#" aria-label="GitHub"><i class="fab fa-github"></i></a>
+                <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+              </div>
+            </div>
+          </div>
+          <div class="about-text">
+            <h2>About Me</h2>
+            <h3>Full-Stack Developer & UI/UX Designer</h3>
+            <p>I specialize in front-end development with a focus on user-friendly designs and performance optimization. My passion lies in creating seamless digital experiences that not only look great but also provide exceptional functionality.</p>
+            
+            <div class="skills-overview">
+              <div class="skill-item">
+                <span class="skill-icon">🎨</span>
+                <div>
+                  <h4>Design</h4>
+                  <p>Creative UI/UX solutions</p>
+                </div>
+              </div>
+              <div class="skill-item">
+                <span class="skill-icon">💻</span>
+                <div>
+                  <h4>Development</h4>
+                  <p>Modern web technologies</p>
+                </div>
+              </div>
+              <div class="skill-item">
+                <span class="skill-icon">📱</span>
+                <div>
+                  <h4>Responsive</h4>
+                  <p>Mobile-first approach</p>
+                </div>
+              </div>
+            </div>
+            
+            <button class="download-cv" onclick="downloadCV()">
+              <i class="fas fa-download"></i>
+              Download CV
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <script>
+        // CV Download functionality
+        function downloadCV() {
+          // Create a temporary link element
+          const link = document.createElement('a');
+          
+          // You can replace this with actual CV file path
+          const cvUrl = 'assets/cv/Alex_Johnson_CV.pdf'; // Update with actual path
+          
+          link.href = cvUrl;
+          link.download = 'Alex_Johnson_CV.pdf';
+          
+          // Temporarily add to DOM, trigger click, then remove
+          document.body.appendChild(link);
+          link.click();
+          document.body.removeChild(link);
+          
+          // Show user feedback
+          showDownloadFeedback();
+        }
+
+        // Show download feedback
+        function showDownloadFeedback() {
+          const button = document.querySelector('.download-cv');
+          const originalText = button.innerHTML;
+          
+          button.innerHTML = '<i class="fas fa-check"></i> Downloaded!';
+          button.style.background = 'linear-gradient(45deg, #27ae60, #2ecc71)';
+          
+          setTimeout(() => {
+            button.innerHTML = originalText;
+            button.style.background = 'linear-gradient(45deg, #3498db, #2980b9)';
+          }, 2000);
+        }
+
+        // Parallax effect for profile image
+        document.addEventListener('scroll', () => {
+          const aboutSection = document.querySelector('#about2');
+          const profileImage = document.querySelector('.about-image img');
+          
+          if (aboutSection && profileImage) {
+            const rect = aboutSection.getBoundingClientRect();
+            const scrollPercent = (window.innerHeight - rect.top) / (window.innerHeight + rect.height);
+            
+            if (scrollPercent >= 0 && scrollPercent <= 1) {
+              const rotation = scrollPercent * 5; // Subtle rotation
+              profileImage.style.transform = `rotate(${rotation}deg)`;
+            }
+          }
+        });
+
+        // Intersection Observer for animations
+        const aboutObserver = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              // Animate skill items
+              const skillItems = entry.target.querySelectorAll('.skill-item');
+              skillItems.forEach((item, index) => {
+                setTimeout(() => {
+                  item.style.animation = 'slideInRight 0.6s ease-out forwards';
+                  item.style.opacity = '0';
+                  item.style.transform = 'translateX(-30px)';
+                  setTimeout(() => {
+                    item.style.opacity = '1';
+                    item.style.transform = 'translateX(0)';
+                  }, 50);
+                }, index * 150);
+              });
+              
+              // Animate profile image
+              const profileImage = entry.target.querySelector('.about-image img');
+              if (profileImage) {
+                profileImage.style.animation = 'zoomIn 1s ease-out';
+              }
+              
+              aboutObserver.unobserve(entry.target);
+            }
+          });
+        }, {
+          threshold: 0.2,
+          rootMargin: '0px 0px -100px 0px'
+        });
+
+        // Initialize observers
+        document.addEventListener('DOMContentLoaded', () => {
+          const aboutSection = document.querySelector('#about2');
+          if (aboutSection) {
+            aboutObserver.observe(aboutSection);
+          }
+          
+          // Add hover effects to social links
+          const socialLinks = document.querySelectorAll('.social-links a');
+          socialLinks.forEach(link => {
+            link.addEventListener('mouseenter', (e) => {
+              e.target.style.transform = 'scale(1.2) rotate(5deg)';
+            });
+            
+            link.addEventListener('mouseleave', (e) => {
+              e.target.style.transform = 'scale(1) rotate(0deg)';
+            });
+          });
+        });
+
+        // Add CSS animations via JavaScript
+        const style = document.createElement('style');
+        style.textContent = `
+          @keyframes slideInRight {
+            from {
+              opacity: 0;
+              transform: translateX(-30px);
+            }
+            to {
+              opacity: 1;
+              transform: translateX(0);
+            }
+          }
+          
+          @keyframes zoomIn {
+            from {
+              opacity: 0;
+              transform: scale(0.8);
+            }
+            to {
+              opacity: 1;
+              transform: scale(1);
+            }
+          }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>

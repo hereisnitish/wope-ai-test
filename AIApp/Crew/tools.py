@@ -1,8 +1,4 @@
 import os
-import subprocess
-import json
-import base64
-import requests
 from typing import List
 import shutil
 from pathlib import Path
@@ -10,6 +6,15 @@ from dotenv import load_dotenv
 from crewai.tools import tool
 from .openai_page_generator import make_website
 from ..models import PortfolioTemplate
+import openai
+
+
+from django.db.models import FloatField
+from django.db.models.expressions import RawSQL
+
+
+
+BASE_PROJECT_DIR = os.path.join("AIAPP")
 
 #utility functions
 def get_user_input(prompt: str) -> str:
@@ -22,20 +27,55 @@ def get_user_input(prompt: str) -> str:
 
 @tool("get_existing_components")
 def get_existing_components(category: str) -> List[PortfolioTemplate]:
-    """Get existing portfolio template components by category. Returns a list of templates with their details."""
+    """Get existing portfolio template components by category."""
 
-    response = PortfolioTemplate.objects.filter(category=category)
-
-    data = [
-        {
-            "name": item.name,
-            "display_name": item.display_name,
-            "description": item.description,
-            "file_path_template": item.file_path_template
-        } for item in response
-    ]
+    query_text = f"Get me {category} components"
+    data = get_vector_data(query_text)
 
     return data
+
+
+
+def get_vector_data(query_text= "footer"):
+    # text from user
+    threshold = 0.2
+
+    # Step 1: Get embedding vector from OpenAI
+
+    client = openai.OpenAI()
+    response = client.embeddings.create(
+        model="text-embedding-3-small",
+        input=query_text
+    )
+    query_vector = response.data[0].embedding
+    threshold = 0.2
+    results = PortfolioTemplate.objects.annotate(
+    similarity=RawSQL(
+        "1 - (embedding <=> %s::vector)",  # <=> is cosine distance in pgvector
+        (query_vector,),
+        output_field=FloatField()
+    )
+    ).filter(similarity__gte=threshold).order_by('-similarity')
+    
+    data = []
+    for t in results:
+        if t.similarity >= 0.4:
+            data.append({
+                "name": t.name,
+                "display_name": t.display_name,
+                "description": t.description,
+                "file_path_template": t.file_path_template,
+                "content":t.content
+            })
+
+    return data
+
+
+@tool("create_css_file")
+def create_css_file(css_content: str) -> str:
+    """Create a CSS file and return the file path. Don't include <style> tag in the css file."""
+    path_name  =  make_website(website_input=f"Make me {css_content} css file", filename=f"styles.css")
+    return path_name
 
 
 @tool("ask_user")
@@ -61,17 +101,8 @@ def combine_components(component_paths: List[str], page_title: str = "Generated 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{page_title}</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        body {{
-            margin: 0;
-            padding: 0;
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            line-height: 1.6;
-        }}
-        .component {{
-            margin-bottom: 0;
-        }}
-    </style>
+    <link rel="stylesheet" href="style.css" />
+    
 </head>
 <body>
 """
@@ -137,6 +168,7 @@ def save_final_html(html_content: str, filename: str = "final_page.html") -> str
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Generated Page</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 {html_content}
@@ -145,6 +177,30 @@ def save_final_html(html_content: str, filename: str = "final_page.html") -> str
 
     output_path.write_text(html_content, encoding="utf-8")
     return str(output_path)
+
+
+def save_css_file():
+    BASE_PROJECT_DIR = os.path.join("AIApp")
+
+    # Define source and destination paths relative to BASE_PROJECT_DIR
+    source_file = os.path.join(BASE_PROJECT_DIR, 'typography', 'style.css')
+    destination_file = os.path.join(BASE_PROJECT_DIR, 'Crew', 'outputs', 'style.css')
+
+    # Create the destination directory if it doesn't exist
+    os.makedirs(os.path.dirname(destination_file), exist_ok=True)
+
+    # Copy the file
+    try:
+        shutil.copy2(source_file, destination_file)
+        print(f"File copied successfully from {source_file} to {destination_file}")
+    except FileNotFoundError:
+        print("Source file not found.")
+    except Exception as e:
+        print(f"An error occurred: {e}")
+    
+    return None
+
+
 
 
 @tool("copy_html_file")
@@ -169,4 +225,5 @@ def copy_html_file(source_file_path: str, destination_filename: str = "final_pag
     # Save to destination
     output_path = outputs_dir / destination_filename
     output_path.write_text(html_content, encoding="utf-8")
+    save_css_file()
     return str(output_path)

@@ -22,6 +22,7 @@ uiux_team_leader_task:
   description: >
     **UI/UX PLANNING & COMPONENT MANAGEMENT:**
     - Based on the requirements provided by the Manager, create a structured list of all components needed for the page.
+
     - Focus on designing essential components such as:
       - Header/Navigation
       - Hero Section
@@ -31,10 +32,11 @@ uiux_team_leader_task:
       - Testimonials/Reviews Section
       - Contact Section
       - Footer
-    - Use the get_existing_components tool to check if these components are already available in the database.
-    - For each missing component, use the create_new_component tool to generate it.
+    - Use the get_existing_components tool to get name of all existing components and matches with the required components.
+    - From the result of get_existing_components tool, use the content of the component to create the component.
+    - Don't use file path of the component, use the content of the component to create the component.
     - Ensure all components are created and file paths are collected for the next step.
-    - Provide a complete list of component file paths (both existing and newly created) to the combiner agent.
+    - Provide a complete list of component file paths to the combiner agent.
     - At most 5 components should be created at a time.
     - Use Html, Css, Tailwind and Javascript to create the components.
 

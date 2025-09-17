@@ -1,0 +1,84 @@
+<section id="projects2" class="projects-modal">
+  <div class="container">
+    <h2>My Work</h2>
+    <p>Click on any project to see detailed information and preview</p>
+    
+    <div class="projects-masonry">
+      <div class="project-item large" onclick="openModal('Project 1')">
+        <img src="https://via.placeholder.com/400x300/3498db/ffffff?text=Web+Application" alt="Web Application">
+        <div class="project-info">
+          <h3>Web Application</h3>
+          <p>Full-stack web application with modern UI/UX</p>
+          <span class="project-category">Web Development</span>
+        </div>
+      </div>
+      
+      <div class="project-item" onclick="openModal('Project 2')">
+        <img src="https://via.placeholder.com/300x400/e74c3c/ffffff?text=Mobile+App" alt="Mobile App">
+        <div class="project-info">
+          <h3>Mobile App</h3>
+          <p>Cross-platform mobile application</p>
+          <span class="project-category">Mobile</span>
+        </div>
+      </div>
+      
+      <div class="project-item wide" onclick="openModal('Project 3')">
+        <img src="https://via.placeholder.com/500x200/2ecc71/ffffff?text=Dashboard+UI" alt="Dashboard UI">
+        <div class="project-info">
+          <h3>Dashboard Interface</h3>
+          <p>Clean and intuitive dashboard design</p>
+          <span class="project-category">UI/UX</span>
+        </div>
+      </div>
+      
+      <div class="project-item" onclick="openModal('Project 4')">
+        <img src="https://via.placeholder.com/300x300/f39c12/ffffff?text=E-commerce" alt="E-commerce Site">
+        <div class="project-info">
+          <h3>E-commerce Platform</h3>
+          <p>Online shopping experience redesign</p>
+          <span class="project-category">E-commerce</span>
+        </div>
+      </div>
+      
+      <div class="project-item tall" onclick="openModal('Project 5')">
+        <img src="https://via.placeholder.com/250x450/9b59b6/ffffff?text=Brand+Identity" alt="Brand Identity">
+        <div class="project-info">
+          <h3>Brand Identity</h3>
+          <p>Complete branding package design</p>
+          <span class="project-category">Branding</span>
+        </div>
+      </div>
+      
+      <div class="project-item" onclick="openModal('Project 6')">
+        <img src="https://via.placeholder.com/350x250/1abc9c/ffffff?text=Landing+Page" alt="Landing Page">
+        <div class="project-info">
+          <h3>Landing Page</h3>
+          <p>High-converting landing page design</p>
+          <span class="project-category">Web Design</span>
+        </div>
+      </div>
+    </div>
+
+    <div id="modal" class="modal">
+      <div class="modal-content">
+        <span onclick="closeModal()" class="close">&times;</span>
+        <div class="modal-header">
+          <h2 id="modal-title">Project Title</h2>
+          <div class="modal-nav">
+            <button onclick="prevProject()" class="nav-btn">‹ Previous</button>
+            <button onclick="nextProject()" class="nav-btn">Next ›</button>
+          </div>
+        </div>
+        <div class="modal-body">
+          <div id="modal-content">
+            <p>Project details will be loaded here...</p>
+          </div>
+          <div class="modal-actions">
+            <a href="#" class="btn btn-primary" target="_blank">View Live</a>
+            <a href="#" class="btn btn-secondary" target="_blank">View Code</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

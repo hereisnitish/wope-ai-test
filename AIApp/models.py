@@ -1,5 +1,7 @@
 from django.db import models
-
+from pgvector.django import VectorField
+from django.contrib.postgres.indexes import GinIndex
+from django.core.exceptions import ValidationError
 
 class PortfolioTemplate(models.Model):
     """
@@ -31,6 +33,10 @@ class PortfolioTemplate(models.Model):
         max_length=500,
         help_text="File path template location"
     )
+    content = models.TextField(
+    help_text="The full HTML, CSS, and JavaScript code for the component"
+)
+    embedding = VectorField(dimensions=1536)
     
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -44,7 +50,7 @@ class PortfolioTemplate(models.Model):
         indexes = [
             models.Index(fields=['category']),
             models.Index(fields=['name']),
-            models.Index(fields=['is_active']),
+            models.Index(fields=['is_active'])
         ]
     
     def __str__(self):
@@ -52,3 +58,7 @@ class PortfolioTemplate(models.Model):
     
     def __repr__(self):
         return f"<PortfolioTemplate: {self.name} ({self.category})>"
+    
+    def clean(self):
+        if self.embedding and len(self.embedding) != 1536:
+            raise ValidationError("Embedding must have exactly 1536 dimensions.")

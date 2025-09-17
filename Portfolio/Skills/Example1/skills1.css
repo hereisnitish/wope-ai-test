@@ -1,0 +1,222 @@
+.skills {
+  padding: 80px 20px;
+  background: #f8f9fa;
+  text-align: center;
+  position: relative;
+}
+
+.skills .container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.skills h2 {
+  font-size: 2.5rem;
+  color: #2c3e50;
+  margin-bottom: 15px;
+  position: relative;
+  display: inline-block;
+}
+
+.skills h2::after {
+  content: '';
+  position: absolute;
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80px;
+  height: 3px;
+  background: linear-gradient(90deg, #3498db, #2980b9);
+  border-radius: 2px;
+}
+
+.skills > .container > p {
+  font-size: 1.1rem;
+  color: #666;
+  margin-bottom: 60px;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.skills-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 40px;
+  margin-bottom: 40px;
+}
+
+.skill-category {
+  background: white;
+  padding: 40px 30px;
+  border-radius: 15px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  border-top: 4px solid #3498db;
+}
+
+.skill-category:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+}
+
+.skill-category h3 {
+  font-size: 1.5rem;
+  color: #2c3e50;
+  margin-bottom: 25px;
+  position: relative;
+}
+
+.skill-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.skill-list li {
+  display: flex;
+  align-items: center;
+  padding: 12px 0;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  border-radius: 8px;
+  margin-bottom: 5px;
+}
+
+.skill-list li:hover {
+  background: rgba(52, 152, 219, 0.1);
+  transform: translateX(10px);
+  padding-left: 15px;
+}
+
+.skill-list li i {
+  font-size: 1.8rem;
+  margin-right: 15px;
+  width: 30px;
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+/* Icon Colors */
+.skill-list li[data-skill="html"] i { color: #e34c26; }
+.skill-list li[data-skill="css"] i { color: #1572b6; }
+.skill-list li[data-skill="javascript"] i { color: #f7df1e; }
+.skill-list li[data-skill="react"] i { color: #61dafb; }
+.skill-list li[data-skill="vue"] i { color: #4fc08d; }
+.skill-list li[data-skill="python"] i { color: #3776ab; }
+.skill-list li[data-skill="django"] i { color: #092e20; }
+.skill-list li[data-skill="nodejs"] i { color: #339933; }
+.skill-list li[data-skill="database"] i { color: #4db33d; }
+.skill-list li[data-skill="api"] i { color: #ff6b6b; }
+.skill-list li[data-skill="git"] i { color: #f14e32; }
+.skill-list li[data-skill="docker"] i { color: #0db7ed; }
+.skill-list li[data-skill="figma"] i { color: #f24e1e; }
+.skill-list li[data-skill="aws"] i { color: #ff9900; }
+.skill-list li[data-skill="webpack"] i { color: #8dd6f9; }
+
+.skill-list li:hover i {
+  transform: scale(1.2) rotate(5deg);
+}
+
+.skill-list li span {
+  font-size: 1rem;
+  color: #555;
+  font-weight: 500;
+}
+
+/* Tooltip Styles */
+.skill-tooltip {
+  position: absolute;
+  background: #2c3e50;
+  color: white;
+  padding: 15px 20px;
+  border-radius: 8px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+  z-index: 1000;
+  min-width: 200px;
+  max-width: 300px;
+  pointer-events: none;
+}
+
+.skill-tooltip.show {
+  opacity: 1;
+  visibility: visible;
+}
+
+.skill-tooltip::after {
+  content: '';
+  position: absolute;
+  bottom: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 8px solid transparent;
+  border-top-color: #2c3e50;
+}
+
+.tooltip-content h4 {
+  margin: 0 0 8px 0;
+  font-size: 1.1rem;
+  color: #3498db;
+}
+
+.tooltip-content p {
+  margin: 0;
+  font-size: 0.9rem;
+  line-height: 1.4;
+}
+
+/* Animations */
+.skills.animate .skill-category {
+  animation: slideInUp 0.6s ease-out;
+}
+
+.skills.animate .skill-category:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.skills.animate .skill-category:nth-child(3) {
+  animation-delay: 0.4s;
+}
+
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .skills {
+    padding: 60px 15px;
+  }
+  
+  .skills h2 {
+    font-size: 2rem;
+  }
+  
+  .skills-grid {
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+  
+  .skill-category {
+    padding: 30px 20px;
+  }
+  
+  .skill-list li {
+    padding: 10px 0;
+  }
+  
+  .skill-list li:hover {
+    transform: translateX(5px);
+    padding-left: 10px;
+  }
+}

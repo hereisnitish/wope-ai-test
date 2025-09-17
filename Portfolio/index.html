@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Modern Portfolio Components - Professional web development snippets">
+    <meta name="keywords" content="portfolio, web development, HTML, CSS, JavaScript, components">
+    <meta name="author" content="Alex Johnson">
+    <title>Modern Portfolio Components</title>
+    
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Main Styles -->
+    <link rel="stylesheet" href="Assets/css/main.css">
+    
+    <style>
+        /* Custom styles for the showcase page */
+        .section-showcase {
+            margin-top: 80px;
+            padding: 60px 20px;
+            text-align: center;
+        }
+        
+        .showcase-header {
+            max-width: 800px;
+            margin: 0 auto 60px;
+        }
+        
+        .showcase-header h1 {
+            font-size: var(--font-size-5xl);
+            color: var(--text-primary);
+            margin-bottom: 20px;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .showcase-header p {
+            font-size: var(--font-size-xl);
+            color: var(--text-secondary);
+            line-height: var(--line-height-relaxed);
+        }
+        
+        .components-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: var(--space-8);
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .component-card {
+            background: var(--bg-primary);
+            border-radius: var(--radius-xl);
+            overflow: hidden;
+            box-shadow: var(--shadow-lg);
+            transition: all var(--transition-base);
+            border: 1px solid var(--border-light);
+        }
+        
+        .component-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-xl);
+        }
+        
+        .component-preview {
+            height: 200px;
+            background: var(--gradient-primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-inverse);
+            font-size: var(--font-size-xl);
+            font-weight: var(--font-weight-semibold);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .component-preview::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s ease;
+        }
+        
+        .component-card:hover .component-preview::before {
+            left: 100%;
+        }
+        
+        .component-info {
+            padding: var(--space-6);
+            text-align: left;
+        }
+        
+        .component-info h3 {
+            color: var(--text-primary);
+            font-size: var(--font-size-xl);
+            margin-bottom: var(--space-2);
+        }
+        
+        .component-info p {
+            color: var(--text-secondary);
+            margin-bottom: var(--space-5);
+            line-height: var(--line-height-relaxed);
+        }
+        
+        .component-examples {
+            display: flex;
+            gap: var(--space-2);
+        }
+        
+        .example-btn {
+            padding: var(--space-2) var(--space-4);
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-light);
+            border-radius: var(--radius-full);
+            text-decoration: none;
+            color: var(--text-secondary);
+            font-size: var(--font-size-sm);
+            transition: all var(--transition-base);
+        }
+        
+        .example-btn:hover {
+            background: var(--text-accent);
+            color: var(--text-inverse);
+            border-color: var(--text-accent);
+        }
+        
+        .footer-showcase {
+            background: var(--bg-darker);
+            color: var(--text-inverse);
+            padding: var(--space-10) var(--space-5);
+            text-align: center;
+            margin-top: var(--space-20);
+        }
+        
+        .footer-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .footer-showcase h2 {
+            margin-bottom: var(--space-4);
+        }
+        
+        .footer-showcase p {
+            opacity: 0.9;
+            margin-bottom: var(--space-5);
+        }
+        
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: var(--space-4);
+            margin-top: var(--space-5);
+        }
+        
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 45px;
+            height: 45px;
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--text-inverse);
+            border-radius: var(--radius-full);
+            text-decoration: none;
+            transition: all var(--transition-base);
+        }
+        
+        .social-links a:hover {
+            background: var(--text-accent);
+            transform: scale(1.1);
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .showcase-header h1 {
+                font-size: var(--font-size-4xl);
+            }
+            
+            .components-grid {
+                grid-template-columns: 1fr;
+                gap: var(--space-5);
+            }
+            
+            .component-card {
+                margin: 0 var(--space-2);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="navbar-container">
+            <a href="#" class="navbar-brand">Modern Portfolio</a>
+            <ul class="navbar-nav">
+                <li><a href="#hero" class="navbar-link">Hero</a></li>
+                <li><a href="#about" class="navbar-link">About</a></li>
+                <li><a href="#skills" class="navbar-link">Skills</a></li>
+                <li><a href="#projects" class="navbar-link">Projects</a></li>
+                <li><a href="#testimonials" class="navbar-link">Testimonials</a></li>
+                <li><a href="#contact" class="navbar-link">Contact</a></li>
+            </ul>
+            <div class="navbar-toggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Showcase -->
+    <section class="section-showcase">
+        <div class="showcase-header">
+            <h1>Modern Portfolio Components</h1>
+            <p>A comprehensive collection of professional portfolio components built with HTML, CSS, and JavaScript. Each component includes multiple examples and variations to suit different design needs.</p>
+        </div>
+
+        <div class="components-grid">
+            <!-- Hero Components -->
+            <div class="component-card animate-fade-in-up">
+                <div class="component-preview">
+                    <i class="fas fa-rocket" style="font-size: 3rem; opacity: 0.8;"></i>
+                </div>
+                <div class="component-info">
+                    <h3 class="text-xl font-semibold text-primary">Hero Sections</h3>
+                    <p class="text-secondary leading-relaxed">Eye-catching hero sections with animations, call-to-action buttons, and responsive design. Perfect for making a strong first impression.</p>
+                    <div class="component-examples">
+                        <a href="Hero/Example1/hero1.html" class="example-btn">Simple Hero</a>
+                        <a href="Hero/Example2/hero2.html" class="example-btn">Image Hero</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- About Components -->
+            <div class="component-card animate-fade-in-up delay-base">
+                <div class="component-preview">
+                    <i class="fas fa-user" style="font-size: 3rem; opacity: 0.8;"></i>
+                </div>
+                <div class="component-info">
+                    <h3 class="text-xl font-semibold text-primary">About Sections</h3>
+                    <p class="text-secondary leading-relaxed">Professional about sections with statistics, profile images, and engaging layouts to showcase your background and achievements.</p>
+                    <div class="component-examples">
+                        <a href="About/Example1/about1.html" class="example-btn">Stats About</a>
+                        <a href="About/Example2/about2.html" class="example-btn">Profile About</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Skills Components -->
+            <div class="component-card animate-fade-in-up delay-slow">
+                <div class="component-preview">
+                    <i class="fas fa-cog" style="font-size: 3rem; opacity: 0.8;"></i>
+                </div>
+                <div class="component-info">
+                    <h3 class="text-xl font-semibold text-primary">Skills Sections</h3>
+                    <p class="text-secondary leading-relaxed">Interactive skills displays with progress bars, icon grids, and animated elements to highlight your technical expertise.</p>
+                    <div class="component-examples">
+                        <a href="Skills/Example1/skills1.html" class="example-btn">Icon Grid</a>
+                        <a href="Skills/Example2/skills2.html" class="example-btn">Progress Bars</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Projects Components -->
+            <div class="component-card animate-fade-in-up delay-slower">
+                <div class="component-preview">
+                    <i class="fas fa-folder-open" style="font-size: 3rem; opacity: 0.8;"></i>
+                </div>
+                <div class="component-info">
+                    <h3 class="text-xl font-semibold text-primary">Project Showcases</h3>
+                    <p class="text-secondary leading-relaxed">Dynamic project galleries with filtering, modal previews, and detailed project information to display your work effectively.</p>
+                    <div class="component-examples">
+                        <a href="Projects/Example1/projects1.html" class="example-btn">Filter Grid</a>
+                        <a href="Projects/Example2/projects2.html" class="example-btn">Modal Gallery</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Testimonials Components -->
+            <div class="component-card animate-fade-in-up delay-slowest">
+                <div class="component-preview">
+                    <i class="fas fa-quote-right" style="font-size: 3rem; opacity: 0.8;"></i>
+                </div>
+                <div class="component-info">
+                    <h3 class="text-xl font-semibold text-primary">Testimonials</h3>
+                    <p class="text-secondary leading-relaxed">Client testimonials with ratings, carousel functionality, and expandable details to build trust and credibility.</p>
+                    <div class="component-examples">
+                        <a href="Testimonials/Example1/testimonials1.html" class="example-btn">Grid Layout</a>
+                        <a href="#" class="example-btn">Carousel</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Contact Components -->
+            <div class="component-card animate-fade-in-up delay-slowest">
+                <div class="component-preview">
+                    <i class="fas fa-envelope" style="font-size: 3rem; opacity: 0.8;"></i>
+                </div>
+                <div class="component-info">
+                    <h3 class="text-xl font-semibold text-primary">Contact Sections</h3>
+                    <p class="text-secondary leading-relaxed">Professional contact forms with validation, social media links, and interactive elements to facilitate communication.</p>
+                    <div class="component-examples">
+                        <a href="#" class="example-btn">Contact Form</a>
+                        <a href="#" class="example-btn">Social Links</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Footer Components -->
+            <div class="component-card animate-fade-in-up delay-slowest">
+                <div class="component-preview">
+                    <i class="fas fa-link" style="font-size: 3rem; opacity: 0.8;"></i>
+                </div>
+                <div class="component-info">
+                    <h3 class="text-xl font-semibold text-primary">Footer Sections</h3>
+                    <p class="text-secondary leading-relaxed">Clean and functional footers with navigation links, social media, and copyright information to complete your portfolio.</p>
+                    <div class="component-examples">
+                        <a href="#" class="example-btn">Simple Footer</a>
+                        <a href="#" class="example-btn">Link Footer</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer-showcase">
+        <div class="footer-content">
+            <h2 class="text-3xl font-bold text-inverse mb-4">Ready to Build Your Portfolio?</h2>
+            <p class="text-lg text-secondary mb-6 leading-relaxed">Use these modern components to create a professional portfolio that stands out. Mix and match components to create your unique design.</p>
+            <div class="social-links">
+                <a href="#" aria-label="GitHub" class="hover:animate-pulse"><i class="fab fa-github"></i></a>
+                <a href="#" aria-label="LinkedIn" class="hover:animate-pulse"><i class="fab fa-linkedin"></i></a>
+                <a href="#" aria-label="Twitter" class="hover:animate-pulse"><i class="fab fa-twitter"></i></a>
+                <a href="#" aria-label="Dribbble" class="hover:animate-pulse"><i class="fab fa-dribbble"></i></a>
+            </div>
+            <p class="mt-8 text-tertiary">&copy; 2025 Modern Portfolio Components. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('.navbar-link').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                if (targetId !== '#') {
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        targetElement.scrollIntoView({
+                            behavior: 'smooth'
+                        });
+                    }
+                }
+            });
+        });
+
+        // Mobile menu toggle
+        const mobileMenu = document.querySelector('.navbar-toggle');
+        const navLinks = document.querySelector('.navbar-nav');
+
+        mobileMenu.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+            mobileMenu.classList.toggle('active');
+        });
+
+        // Navigation background on scroll
+        window.addEventListener('scroll', () => {
+            const nav = document.querySelector('.navbar');
+            if (window.scrollY > 50) {
+                nav.classList.add('navbar-scrolled');
+            } else {
+                nav.classList.remove('navbar-scrolled');
+            }
+        });
+
+        // Intersection Observer for card animations
+        const cardObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animationPlayState = 'running';
+                }
+            });
+        }, {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        });
+
+        // Observe all component cards
+        document.querySelectorAll('.component-card').forEach(card => {
+            card.style.animationPlayState = 'paused';
+            cardObserver.observe(card);
+        });
+
+        // Add hover sound effects (optional)
+        document.querySelectorAll('.component-card').forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                card.style.transform = 'translateY(-15px) scale(1.02)';
+            });
+            
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = 'translateY(0) scale(1)';
+            });
+        });
+
+        // Live preview functionality for example buttons
+        document.querySelectorAll('.example-btn').forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                if (this.href.includes('.html')) {
+                    e.preventDefault();
+                    
+                    // Create iframe preview modal
+                    const modal = document.createElement('div');
+                    modal.style.cssText = `
+                        position: fixed;
+                        top: 0;
+                        left: 0;
+                        width: 100%;
+                        height: 100%;
+                        background: rgba(0, 0, 0, 0.8);
+                        z-index: 2000;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        padding: 20px;
+                    `;
+                    
+                    const iframe = document.createElement('iframe');
+                    iframe.src = this.href;
+                    iframe.style.cssText = `
+                        width: 100%;
+                        max-width: 1200px;
+                        height: 80vh;
+                        border: none;
+                        border-radius: 10px;
+                        background: white;
+                    `;
+                    
+                    const closeBtn = document.createElement('button');
+                    closeBtn.innerHTML = '&times;';
+                    closeBtn.style.cssText = `
+                        position: absolute;
+                        top: 10px;
+                        right: 20px;
+                        background: white;
+                        border: none;
+                        width: 40px;
+                        height: 40px;
+                        border-radius: 50%;
+                        font-size: 1.5rem;
+                        cursor: pointer;
+                        z-index: 2001;
+                    `;
+                    
+                    closeBtn.onclick = () => modal.remove();
+                    modal.onclick = (e) => {
+                        if (e.target === modal) modal.remove();
+                    };
+                    
+                    modal.appendChild(iframe);
+                    modal.appendChild(closeBtn);
+                    document.body.appendChild(modal);
+                }
+            });
+        });
+    </script>
+</body>
+</html>

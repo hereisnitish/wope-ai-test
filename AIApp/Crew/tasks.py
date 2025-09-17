@@ -12,7 +12,7 @@ def uiux_team_leader_task(tasks_config: dict, uiux_team_leader_agent) -> Task:
 	return Task(
 		config=tasks_config['uiux_team_leader_task'],
 		agent=uiux_team_leader_agent,
-		tools=[get_existing_components, create_new_component]
+		tools=[get_existing_components]
 	)
 
 
