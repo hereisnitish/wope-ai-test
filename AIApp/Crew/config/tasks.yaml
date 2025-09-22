@@ -20,11 +20,9 @@ manager_task:
 
 uiux_team_leader_task:
   description: >
-    **UI/UX PLANNING & COMPONENT MANAGEMENT:**
-    - Based on the requirements provided by the Manager, create a structured list of all components needed for the page.
-
-    - Focus on designing essential components such as:
-      - Header/Navigation
+    - Your first task will be to analyze the requirements provided by the Manager.
+    - Based on the requirements, create a structured list of all components needed for the page.
+    - For example if user ask for a portfolio page, you should create the following components:
       - Hero Section
       - About/Introduction Section
       - Features/Services Section
@@ -32,50 +30,45 @@ uiux_team_leader_task:
       - Testimonials/Reviews Section
       - Contact Section
       - Footer
-    - Use the get_existing_components tool to get name of all existing components and matches with the required components.
-    - From the result of get_existing_components tool, use the content of the component to create the component.
-    - Don't use file path of the component, use the content of the component to create the component.
-    - Ensure all components are created and file paths are collected for the next step.
-    - Provide a complete list of component file paths to the combiner agent.
-    - At most 5 components should be created at a time.
-    - Use Html, Css, Tailwind and Javascript to create the components.
+    - Make sure the components are in correct order for a website or portfolio page.For example Footer should be at the end of the page.
+    - Use the get_existing_components tool to get existing components. Send the list of components to the tool.
+    - The list of components should be in the proper order for a website or portfolio page. For example Footer should be at the end of the page.
+    - After getting the components, use the save_html_to_database_with_embeddings tool to save the components to the database.
 
   expected_output: >
-    - Complete list of required components with their file paths.
-    - All missing components created using the create_new_component tool.
-    - List of component file paths ready for combination.
+    - Complete list of required components.
     - UI/UX design plan ensuring cohesive and interactive user experience.
   agent: uiux_team_leader_agent
 
 
-combiner_task:
-  description: >
-    **COMPONENT ASSEMBLY & INTEGRATION:**
-    - Receive the list of component file paths from the UI/UX Team Leader.
-    - Use the combine_components tool to merge all individual HTML components into a single complete HTML page.
-    - Ensure proper HTML structure with DOCTYPE, head, and body tags.
-    - Add basic CSS styling to ensure components flow together seamlessly.
-    - Validate that all components are properly integrated and the page structure is complete.
-    - Pass the complete HTML content to the aggregator agent for final processing.
-    - Use Html, Css, Tailwind and Javascript to combine the components.
+# combiner_task:
+#   description: >
+#     **COMPONENT ASSEMBLY & INTEGRATION:**
+#     - Receive the list of component file paths from the UI/UX Team Leader.
+#     - Use the combine_components tool to merge all individual HTML components into a single complete HTML page.
+#     - Ensure proper HTML structure with DOCTYPE, head, and body tags.
+#     - Add basic CSS styling to ensure components flow together seamlessly.
+#     - Validate that all components are properly integrated and the page structure is complete.
+#     - Pass the complete HTML content to the aggregator agent for final processing.
+#     - Use Html, Css, Tailwind and Javascript to combine the components.
 
-  expected_output: >
-    - Complete HTML page with all components properly integrated.
-    - File path to the combined HTML page.
-    - HTML content ready for final review and saving.
-  agent: combiner_agent
+#   expected_output: >
+#     - Complete HTML page with all components properly integrated.
+#     - File path to the combined HTML page.
+#     - HTML content ready for final review and saving.
+#   agent: combiner_agent
 
-aggregator_task:
-  description: >
-    **FINAL REVIEW & HTML FILE SAVING:**
-    - Receive the file path to the combined HTML page from the Combiner agent.
-    - Review the integrated page for consistency, responsiveness, and usability.
-    - Check that all components are properly integrated and the page structure is complete.
-    - Use the copy_html_file tool to copy the combined HTML file to a final location with a proper filename.
-    - Provide a final validation report and confirm the HTML file has been successfully saved.
+# aggregator_task:
+#   description: >
+#     **FINAL REVIEW & HTML FILE SAVING:**
+#     - Receive the file path to the combined HTML page from the Combiner agent.
+#     - Review the integrated page for consistency, responsiveness, and usability.
+#     - Check that all components are properly integrated and the page structure is complete.
+#     - Use the copy_html_file tool to copy the combined HTML file to a final location with a proper filename.
+#     - Provide a final validation report and confirm the HTML file has been successfully saved.
 
-  expected_output: >
-    - Final HTML file saved to the outputs directory with proper HTML formatting.
-    - File path to the saved HTML file.
-    - Final validation report confirming the page is ready for use.
-  agent: aggregator_agent
+#   expected_output: >
+#     - Final HTML file saved to the outputs directory with proper HTML formatting.
+#     - File path to the saved HTML file.
+#     - Final validation report confirming the page is ready for use.
+#   agent: aggregator_agent

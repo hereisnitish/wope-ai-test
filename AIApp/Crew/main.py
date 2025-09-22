@@ -2,9 +2,32 @@ import os
 import json
 from crewai import Agent, Crew, Process, Task
 from crewai.project import CrewBase, agent, crew, task
-from .agents import create_manager_agent, uiux_team_leader_agent as create_uiux_team_leader_agent, combiner_agent as create_combiner_agent, aggregator_agent as create_aggregator_agent
-from .tasks import create_manager_task, uiux_team_leader_task as create_uiux_team_leader_task, combiner_task as create_combiner_task, aggregator_task as create_aggregator_task
+from .agents import create_manager_agent, uiux_team_leader_agent as create_uiux_team_leader_agent
+# , combiner_agent as create_combiner_agent, aggregator_agent as create_aggregator_agent
+from .tasks import create_manager_task, uiux_team_leader_task as create_uiux_team_leader_task
+# , combiner_task as create_combiner_task, aggregator_task as create_aggregator_task
+from dotenv import load_dotenv
 
+# Load env early
+load_dotenv()
+os.environ.setdefault("LANGCHAIN_TRACING_V2", "true")
+
+# Instrumentation (LangSmith + OTEL)
+from langsmith.integrations.otel import OtelSpanProcessor
+from opentelemetry import trace
+from opentelemetry.sdk.trace import TracerProvider
+from openinference.instrumentation.crewai import CrewAIInstrumentor
+from openinference.instrumentation.openai import OpenAIInstrumentor
+
+tracer_provider = trace.get_tracer_provider()
+if not isinstance(tracer_provider, TracerProvider):
+    tracer_provider = TracerProvider()
+    trace.set_tracer_provider(tracer_provider)
+
+tracer_provider.add_span_processor(OtelSpanProcessor())
+
+CrewAIInstrumentor().instrument()
+OpenAIInstrumentor().instrument()
 
 
 @CrewBase
@@ -20,13 +43,13 @@ class DjangoProjectGeneratorCrew():
 		return create_uiux_team_leader_agent(self.agents_config)
 
 
-	@agent
-	def combiner_agent(self) -> Agent:
-		return create_combiner_agent(self.agents_config)
+	# @agent
+	# def combiner_agent(self) -> Agent:
+	# 	return create_combiner_agent(self.agents_config)
 
-	@agent
-	def aggregator_agent(self) -> Agent:
-		return create_aggregator_agent(self.agents_config)
+	# @agent
+	# def aggregator_agent(self) -> Agent:
+	# 	return create_aggregator_agent(self.agents_config)
 
 	@task
 	def manager_task(self) -> Task:
@@ -36,13 +59,13 @@ class DjangoProjectGeneratorCrew():
 	def uiux_team_leader_task(self) -> Task:
 		return create_uiux_team_leader_task(self.tasks_config, self.uiux_team_leader_agent())
 
-	@task
-	def combiner_task(self) -> Task:
-		return create_combiner_task(self.tasks_config, self.combiner_agent())
+	# @task
+	# def combiner_task(self) -> Task:
+	# 	return create_combiner_task(self.tasks_config, self.combiner_agent())
 
-	@task
-	def aggregator_task(self) -> Task:
-		return create_aggregator_task(self.tasks_config, self.aggregator_agent())
+	# @task
+	# def aggregator_task(self) -> Task:
+	# 	return create_aggregator_task(self.tasks_config, self.aggregator_agent())
 
 
 	@crew
@@ -51,14 +74,14 @@ class DjangoProjectGeneratorCrew():
 			agents= [
 				self.manager_agent(),
 				self.uiux_team_leader_agent(),
-				self.combiner_agent(),
-				self.aggregator_agent(),
+				# self.combiner_agent(),
+				# self.aggregator_agent(),
 			],  # Automatically collected by the @agent decorator
 			tasks= [
 				self.manager_task(),
 				self.uiux_team_leader_task(),
-				self.combiner_task(),
-				self.aggregator_task(),
+				# self.combiner_task(),
+				# self.aggregator_task(),
 			],  # Automatically collected by the @task decorator
 			verbose=True,
 			process=Process.sequential,  # Changed to sequential for proper workflow
